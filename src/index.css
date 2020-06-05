@@ -1,0 +1,9 @@
+.item.completed {
+    background-color: snow;
+    text-decoration: line-through;
+  }
+
+
+  html{
+      background: skyblue
+  }

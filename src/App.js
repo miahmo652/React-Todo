@@ -1,5 +1,6 @@
 import React from 'react';
 import TodoList from './components/TodoList.js'
+import TodoForm from './components/TodoForm.js'
 
 const todoData =[
 
@@ -35,22 +36,53 @@ constructor(){
     todoData
   }
 }
-toggleItem = itemId =>{
-  console.log(itemId)
-  /*this.setState({
+toggleItem = todoId =>{
+  console.log(todoId)
+  this.setState({
 
-    todoData:this.state.todoData.map(item=>{
-      if(itemId===item.id){
-        return
+    todoData: this.state.todoData.map(todo=>{
+      if(todoId === todo.id){
+        return {
+          ...todo,
+          completed: !todo.completed
+        };
       }
+      else {
+        return todo;
+      }
+      
     })
-  }) */
+  }); 
+};
+
+addItem = (e, item)=>{
+  e.preventDefault();
+  const newItem ={
+    task:item,
+    id: Date.now(),
+    completed: false
+  };
+  this.setState({
+    todoData: [...this.state.todoData, newItem]
+  });
+};
+
+clearCompleted = e =>{
+  e.preventDefault();
+  this.setState({
+    todoData: this.state.todoData.filter(item=> !item.completed)
+  })
 }
+
   render() {
     return (
       <div>
         <h2>Welcome to your Todo App!</h2>
-      <TodoList toggleItem={this.toggleItem} todoData={this.state.todoData}/>
+        <TodoForm addItem={this.addItem}/>
+      <TodoList 
+      toggleItem={this.toggleItem}
+      clearCompleted={this.clearCompleted}
+      todoData={this.state.todoData}/>
       </div>
     );
   }
